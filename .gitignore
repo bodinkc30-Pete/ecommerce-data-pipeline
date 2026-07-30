@@ -2,14 +2,22 @@
 __pycache__/
 *.pyc
 
+# Private and generated source data
 data/raw/*
 data/staging/*
 data/processed/*
 
+# Keep empty folder markers
 !data/raw/.gitkeep
 !data/staging/.gitkeep
 !data/processed/.gitkeep
 
+# Allow portfolio-safe CSV outputs
+!data/processed/portfolio_outputs/
+data/processed/portfolio_outputs/*
+!data/processed/portfolio_outputs/*.csv
+
+# Databases and environment files
 *.db
 .env
 .vscode/
