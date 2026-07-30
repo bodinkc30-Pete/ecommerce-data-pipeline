@@ -1,6 +1,6 @@
 # E-commerce Data Pipeline
 
-An end-to-end Data Engineering project for ingesting, cleaning, validating, transforming, loading, and analyzing multi-source e-commerce Excel data.
+An end-to-end Data Engineering project for ingesting, cleaning, validating, transforming, loading, analyzing, and exporting multi-source e-commerce Excel data.
 
 The pipeline uses Python, Pandas, SQL, SQLite, and OpenPyXL to convert raw Excel files into structured, validated, and analysis-ready datasets.
 
@@ -102,7 +102,6 @@ ecommerce-data-pipeline/
 │   │   ├── shop/
 │   │   └── .gitkeep
 │   ├── staging/
-│   │   ├── shop_daily.csv
 │   │   └── .gitkeep
 │   └── processed/
 │       ├── portfolio_outputs/
@@ -112,17 +111,21 @@ ecommerce-data-pipeline/
 │       │   ├── sample_top_revenue_days.csv
 │       │   └── sample_traffic_conversion_summary.csv
 │       └── .gitkeep
+├── docs/
+│   └── images/
+│       ├── data_quality_passed.png
+│       └── pipeline_success.png
 ├── src/
-│   ├── extract/
-│   │   └── inspect_excel.py
-│   ├── transform/
-│   │   └── clean_shop.py
-│   ├── load/
-│   │   └── load_shop_sqlite.py
 │   ├── analytics/
 │   │   └── analyze_shop.py
-│   └── export/
-│       └── export_portfolio_outputs.py
+│   ├── export/
+│   │   └── export_portfolio_outputs.py
+│   ├── extract/
+│   │   └── inspect_excel.py
+│   ├── load/
+│   │   └── load_shop_sqlite.py
+│   └── transform/
+│       └── clean_shop.py
 ├── run_pipeline.py
 ├── requirements.txt
 ├── .gitignore
@@ -131,7 +134,7 @@ ecommerce-data-pipeline/
 
 The raw source files, staging data, processed database, and complete processed dataset are excluded from GitHub through `.gitignore`.
 
-Only portfolio-safe sample outputs are committed.
+Only portfolio-safe sample outputs and documentation evidence are committed.
 
 ---
 
@@ -152,6 +155,7 @@ orders
 customers
 items_sold
 refunded_items
+sku_orders
 total_revenue
 page_views
 visitors
@@ -223,6 +227,9 @@ The pipeline validates important data-quality conditions before portfolio output
 Validation checks include:
 
 - Missing dates
+- Invalid dates
+- Duplicate dates
+- Missing values
 - Invalid GMV values
 - Negative GMV values
 - Invalid order counts
@@ -231,7 +238,6 @@ Validation checks include:
 - Negative revenue values
 - Missing conversion rates
 - Negative conversion rates
-- Duplicate dates
 
 Current validation result:
 
@@ -246,6 +252,53 @@ Duplicate dates: 0
 ```
 
 All 105 processed records passed the configured validation rules.
+
+---
+
+## Pipeline Evidence
+
+### End-to-End Pipeline Success
+
+![Pipeline Success](docs/images/pipeline_success.png)
+
+The pipeline successfully completed the Transform, Load, and Analytics stages.
+
+Key execution results:
+
+```text
+Source files found: 5
+Source files processed: 4
+Combined records: 105
+Invalid dates: 0
+Duplicate dates: 0
+Missing values: 0
+Negative values: 0
+Loaded records: 105
+Target table: shop_daily
+Pipeline status: Success
+```
+
+The final execution completed with:
+
+```text
+Pipeline completed successfully.
+```
+
+### Data Quality Evidence
+
+![Data Quality Passed](docs/images/data_quality_passed.png)
+
+All configured data quality checks passed.
+
+```text
+Total records: 105
+Missing dates: 0
+Invalid GMV records: 0
+Invalid order records: 0
+Invalid revenue records: 0
+Invalid conversion records: 0
+Duplicate dates: 0
+```
 
 ---
 
@@ -425,9 +478,9 @@ The pipeline addressed this by:
 - Checking invalid record counts
 - Filling or correcting invalid values before export
 
-### Missing Revenue Values
+### Invalid Revenue Value
 
-The revenue column contained a value that could not be converted directly into a number.
+The revenue column contained one value that could not be converted directly into a number.
 
 The pipeline:
 
@@ -516,6 +569,12 @@ Transform
 → Analytics
 ```
 
+Expected final result:
+
+```text
+Pipeline completed successfully.
+```
+
 ---
 
 ## Export Portfolio Outputs
@@ -563,7 +622,13 @@ Only portfolio-safe CSV files inside this directory are committed:
 data/processed/portfolio_outputs/
 ```
 
-The `.gitignore` configuration prevents the raw Excel files, SQLite database, staging data, and complete processed dataset from being published.
+Documentation evidence is stored in:
+
+```text
+docs/images/
+```
+
+The `.gitignore` configuration prevents raw Excel files, the SQLite database, staging data, and the complete processed dataset from being published.
 
 ---
 
