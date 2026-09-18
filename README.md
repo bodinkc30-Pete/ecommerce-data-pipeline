@@ -1,3 +1,9 @@
+## Public evidence and reproducibility boundary (reviewed 2026-09-18)
+
+The committed data-quality snapshot records **105 rows** and zero findings for the listed validation checks. This is a recorded portfolio checkpoint, not a claim that the source Excel files are public or that a hosted pipeline is always running.
+
+The repository currently has no Dockerfile, GitHub Actions workflow, or automated regression suite. A fresh clone excludes private raw Excel files and the generated SQLite database. The documented runner performs Transform → Load → Analytics, and the five portfolio exports are separate evidence outputs. A synthetic fixture, tests, and CI workflow are appropriate future extensions.
+
 # E-commerce Data Pipeline
 
 An end-to-end Data Engineering project for ingesting, cleaning, validating, transforming, loading, analyzing, and exporting multi-source e-commerce Excel data.
